@@ -7,8 +7,11 @@ import java.util.Collection;
 import java.util.List;
 
 import com.briup.bean.Environment;
+import com.briup.util.Log;
+import com.briup.util.LogImpl;
 
 public class GatherImpl implements Gather{
+	private static Log log=new LogImpl();
 List<Environment> list=new ArrayList<Environment>();//存放环境数据
 	@Override
 	public Collection<Environment> gather() throws Exception {
@@ -19,6 +22,7 @@ List<Environment> list=new ArrayList<Environment>();//存放环境数据
 		   //2.3根据公式计算环境值
 		   //注意：当判断为16时，要将温度湿度创建为两个Environment对象
 		//将采集的数据放到集合中
+		log.info("开始采集");
 		RandomAccessFile raf=new RandomAccessFile("src/main/java/radwtmp", "r");
 		String str=null; 
 		//记录温度和湿度条数
@@ -30,7 +34,7 @@ List<Environment> list=new ArrayList<Environment>();//存放环境数据
 		Environment environment=null;
 		String[] split=null;
 		while ((str=raf.readLine())!=null) {
-			environment=new Environment();//既可以为温度也可以代表关照强度或者二氧化碳
+			environment=new Environment();//既可以为温度也可以代表光照强度或者二氧化碳
 			 split= str.split("[|]");
 			 environment.setSendId(split[0]);//电脑端id
 			 environment.setSmId(split[1]);//树莓派id
@@ -69,15 +73,36 @@ List<Environment> list=new ArrayList<Environment>();//存放环境数据
 				
 			}else{
 				//公式
+				float value = Integer.valueOf(split[6].substring(0, 4), 16);
 				//判断是光照强度还是二氧化碳浓度
 				if("256".equals(split[3])) {
-					
+					environment.setName("光照强度");
+					environment.setData(value);
+					list.add(environment);
+					count2++;
 				}else {
-					
+					environment.setName("二氧化碳");
+					environment.setData(value);
+					list.add(environment);
+					count3++;
 				}
 			}
 		}
-		return null;
+		//System.out.println(count1+":"+count2+":"+count3);
+		log.info("温度和湿度个数:"+count1);
+		log.info("光照强度个数:"+count2);
+		log.info("二氧化碳个数:"+count3);
+		log.info("采集完成");
+		return list;
 	}
-
+public static void main(String[] args) {
+	try {
+		Gather gather=new GatherImpl();
+		Collection<Environment> gathers = gather.gather();
+		System.out.println(gathers.size()); 
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 }

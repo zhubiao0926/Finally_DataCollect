@@ -1,0 +1,10 @@
+com.briup.util.LogImpl.info(LogImpl.java:22)-开始采集
+com.briup.util.LogImpl.info(LogImpl.java:22)-温度和湿度个数:35343
+com.briup.util.LogImpl.info(LogImpl.java:22)-光照强度个数:26056
+com.briup.util.LogImpl.info(LogImpl.java:22)-二氧化碳个数:10124
+com.briup.util.LogImpl.info(LogImpl.java:22)-采集完成
+com.briup.util.LogImpl.info(LogImpl.java:22)-开始采集
+com.briup.util.LogImpl.info(LogImpl.java:22)-温度和湿度个数:35343
+com.briup.util.LogImpl.info(LogImpl.java:22)-光照强度个数:26056
+com.briup.util.LogImpl.info(LogImpl.java:22)-二氧化碳个数:10124
+com.briup.util.LogImpl.info(LogImpl.java:22)-采集完成
