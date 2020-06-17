@@ -95,14 +95,10 @@ List<Environment> list=new ArrayList<Environment>();//存放环境数据
 		log.info("采集完成");
 		return list;
 	}
-public static void main(String[] args) {
-	try {
-		Gather gather=new GatherImpl();
-		Collection<Environment> gathers = gather.gather();
-		System.out.println(gathers.size()); 
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-}
+	/*
+	 * public static void main(String[] args) { try { Gather gather=new
+	 * GatherImpl(); Collection<Environment> gathers = gather.gather();
+	 * System.out.println(gathers.size()); } catch (Exception e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); } }
+	 */
 }
