@@ -4,6 +4,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Collection;
+import java.util.Properties;
 
 import com.briup.bean.Environment;
 import com.briup.util.Log;
@@ -11,11 +12,18 @@ import com.briup.util.LogImpl;
 
 public class ClientImpl implements Client{
 	private static Log log=new LogImpl();
+	private String ip;
+	private int port;
+
+	public void init(Properties properties) throws Exception {
+		ip=properties.getProperty("ip");
+		port=Integer.parseInt(properties.getProperty("port"));
+		
+	}
     //将采集的数据发送给服务器端
-	@Override
 	public void send(Collection<Environment> coll) throws Exception {
 		log.info("客户端开始发送数据");
-		Socket socket=new Socket("127.0.0.1", 10000);
+		Socket socket=new Socket(ip, port);
 		OutputStream os = socket.getOutputStream();
 		ObjectOutputStream oos=new ObjectOutputStream(os);
 		oos.writeObject(coll);
@@ -28,4 +36,5 @@ public class ClientImpl implements Client{
 	 * client=new ClientImpl(); client.send(list); } catch (Exception e) { // TODO
 	 * Auto-generated catch block e.printStackTrace(); } }
 	 */
+	
 }

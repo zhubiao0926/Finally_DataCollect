@@ -6,19 +6,23 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collection;
+import java.util.Properties;
 
 import com.briup.bean.Environment;
 import com.briup.util.Log;
 import com.briup.util.LogImpl;
 
 public class ServerImpl implements Server {
-	private int port = 10000;
+	private int port;
 	private ServerSocket ss;
 	private Socket socket;
 	private InputStream is;
 	private ObjectInputStream ois;
     private static Log log=new LogImpl();
-	@Override
+    public void init(Properties properties) throws Exception {
+		port=Integer.parseInt(properties.getProperty("port")); 
+		
+	}
 	public Collection<Environment> reciver() throws Exception {
 		log.info("服务器端开启接受数据");
 		ss=new ServerSocket(port);
@@ -32,7 +36,6 @@ public class ServerImpl implements Server {
 		return coll;
 	}
 
-	@Override
 	public void shutdown() {
        try {
 		if(ois!=null)
@@ -52,4 +55,6 @@ public class ServerImpl implements Server {
 	 * System.out.println(list.size()); } catch (Exception e) { // TODO
 	 * Auto-generated catch block e.printStackTrace(); } }
 	 */
+
+	
 }
